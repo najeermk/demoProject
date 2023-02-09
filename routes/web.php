@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ListingController;
 
@@ -50,3 +51,7 @@ Route::delete('/listings/{listing}', [ListingController::class, 'destroy'])->mid
 
 // Manage Listings
 Route::get('/listings/manage', [ListingController::class, 'manage'])->middleware('auth');
+
+//Mail
+Route::get('/contact', [MailController::class, 'contact'])->name('contact');
+Route::post('/contact-form', [MailController::class, 'contactForm'])->name('contactForm');
