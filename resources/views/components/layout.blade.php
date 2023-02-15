@@ -28,9 +28,11 @@
           Welcome {{auth()->user()->name}}
         </span>
       </li>
-      <li>
-        <a href="/listings/manage" class="hover:text-cyan-700"><i class="fa-solid fa-gear"></i> Manage Listings</a>
-      </li>
+      @if(auth()->user()->is_admin)
+        <li>
+          <a href="/listings/manage" class="hover:text-cyan-700"><i class="fa-solid fa-gear"></i> Manage Listings</a>
+        </li>
+      @endif
       <li>
         <form class="inline" method="POST" action="/logout">
           @csrf

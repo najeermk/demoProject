@@ -16,6 +16,27 @@ use App\Http\Controllers\ListingController;
 |
 */
 
+Route::group(['middleware' => 'is_admin'], function(){
+    // Show Create Form
+    Route::get('/listings/create', [ListingController::class, 'create'])->middleware('auth');
+
+    // Store Listing Data
+    Route::post('/listings', [ListingController::class, 'store'])->middleware('auth');
+
+    // Show Edit Form
+    Route::get('/listings/{listing}/edit', [ListingController::class, 'edit'])->middleware('auth')->name('edit');
+
+    // Update Listing
+    Route::put('/listings/{listing}', [ListingController::class, 'update'])->middleware('auth')->name('update');
+
+    // Delete Listing
+    Route::delete('/listings/{listing}', [ListingController::class, 'destroy'])->middleware('auth');
+
+    // Manage Listings
+    Route::get('/listings/manage', [ListingController::class, 'manage'])->middleware('auth');
+    
+});
+
 // All Listing
 Route::get('/', [ListingController::class, 'index']);
 
@@ -33,25 +54,6 @@ Route::post('/login/authenticate', [UserController::class, 'authenticate'])->nam
 
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 
-
-// Show Create Form
-Route::get('/listings/create', [ListingController::class, 'create'])->middleware('auth');
-
-// Store Listing Data
-Route::post('/listings', [ListingController::class, 'store'])->middleware('auth');
-
-// Show Edit Form
-Route::get('/listings/{listing}/edit', [ListingController::class, 'edit'])->middleware('auth')->name('edit');
-
-// Update Listing
-Route::put('/listings/{listing}', [ListingController::class, 'update'])->middleware('auth')->name('update');
-
-// Delete Listing
-Route::delete('/listings/{listing}', [ListingController::class, 'destroy'])->middleware('auth');
-
-// Manage Listings
-Route::get('/listings/manage', [ListingController::class, 'manage'])->middleware('auth');
-
 //Mail
 Route::get('/contact', [MailController::class, 'contact'])->name('contact');
-Route::post('/contact-form', [MailController::class, 'contactForm'])->name('contactForm');
+Route::post('/contact-form', [MailController::class, 'sendMail'])->name('contactForm');
